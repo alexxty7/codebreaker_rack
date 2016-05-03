@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1 class='text-center'>To break a secret code enter four digits from 1 to 6</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="well">
+        <% if current_game && current_game.completed? %>
+          <% if current_game.game_status == 'win' %>
+            <h1>Congratulations, You won!</h1>
+          <% else %>
+            <h1>Unfortunately you lose</h1>
+          <% end %>
+          <a href="/game/new" class='btn btn-success'>Play again</a>
+          <a href="#" data-toggle="modal" data-target="#save-modal" class='btn btn-success'>Save result</a>
+        <% else %>
+          <form class="form-inline" method="post" action="/game/check_guess">
+            <div class="form-group">
+              <input name="guess" type="text" class="form-control" placeholder="Enter a guess" pattern="[1-6]{4}">
+            </div>
+            <button type="submit" class="btn btn-default">Check guess</button>
+          </form>
+           <a href="#" id='hint' class='btn btn-success'>Take a hint</a>
+        <% end %>
+    </div>
+    <div class="well">
+      <p>Attempts left: <%= current_game.turns_number if current_game %></p>
+      <hr>
+      <p>Your answer is <%= @answer %></p>
+      <p>Your result is <%= @result %></p>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="well">
+      <h2>History</h2>
+      <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Name</td>
+          <th>Sectet code</td>
+          <th>Used attempts</td>
+          <th>Used hints</td>
+          <th>Status</td>
+        </tr>
+      <% @history.each do |result| %>    
+        <tr>
+          <td><%= result[:user_name] %></td>
+          <td><%= result[:secret_code] %></td>
+          <td><%= result[:used_attempts] %></td>
+          <td><%= result[:used_hints] %></td>
+          <td><%= result[:game_status] %></td>
+        </tr>
+      <% end %>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="save-modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h2>Save your result!</h2>
+      </div>
+      <div class="modal-body">
+        <form class="form-inline" method="post" action="/game/save_result">
+            <div class="form-group">
+              <input name="user_name" type="text" class="form-control" placeholder="Enter a your name" required>
+            </div>
+          <button type="submit" class="btn btn-default">Save!</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="hint-modal" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h2 class='text-center'></h2>
+      </div>
+    </div>
+  </div>
+</div>
