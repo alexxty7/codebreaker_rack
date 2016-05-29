@@ -3,4 +3,4 @@
 source 'https://rubygems.org'
 
 gem 'rack'
-gem 'codebreaker', git: 'git://github.com/alexxty7/codebreaker.git'
+gem 'codebreaker', github: 'alexxty7/codebreaker', branch: 'for_rack_app'

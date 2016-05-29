@@ -1,6 +1,7 @@
 GIT
   remote: git://github.com/alexxty7/codebreaker.git
-  revision: fa490ceb7a89b1a8bf0141ff216217eb9ac8ace9
+  revision: 6e9f42a1bf4b4a919b253e4be0c85e622b5d15b0
+  branch: for_rack_app
   specs:
     codebreaker (0.1.0)
 

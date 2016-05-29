@@ -8,4 +8,10 @@ $(document).ready(function(){
 
     $('#hint-modal').modal('show');
   });
+
+  var url = window.location;
+  var element = $('ul.nav a').filter(function() {
+      return this.href == url;
+  }).parent().addClass('active');
+
 });

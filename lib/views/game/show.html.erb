@@ -6,8 +6,8 @@
 <div class="row">
   <div class="col-md-6">
     <div class="well">
-        <% if current_game && current_game.completed? %>
-          <% if current_game.game_status == 'win' %>
+        <% if game_finished? %>
+          <% if game_win? %>
             <h1>Congratulations, You won!</h1>
           <% else %>
             <h1>Unfortunately you lose</h1>

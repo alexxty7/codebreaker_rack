@@ -6,10 +6,10 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12 <%= 'col-md-6' if current_game && !current_game.completed? %>">
+    <div class="col-sm-12 <%= 'col-md-6' if game_in_progress? %>">
       <a href="/game/new" class="btn btn-primary btn-block">New game</a>
     </div>
-    <% if current_game && !current_game.completed? %>
+    <% if game_in_progress? %>
       <div class="col-sm-12 col-md-6">
         <a href="/game" class="btn btn-primary btn-block">Continue game</a>
       </div>

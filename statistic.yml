@@ -16,3 +16,9 @@
 :used_attempts: 3
 :used_hints: 1
 :game_status: win
+---
+:user_name: '11111'
+:secret_code: '6251'
+:used_attempts: 5
+:used_hints: 0
+:game_status: lose

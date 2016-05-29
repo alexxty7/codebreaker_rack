@@ -1,4 +1,5 @@
 require 'erb'
+require_relative 'view_context'
 
 class Racker
   def self.call(env)
@@ -27,7 +28,7 @@ class Racker
   end
 
   def show
-    @history = Codebreaker::Game.load_result
+    @history = Codebreaker::Game.load_result('data.yml')
     @answer = @request.session[:guess]
     @result = @request.session[:result]
     render('show')
@@ -35,7 +36,8 @@ class Racker
 
   def new_game
     @request.session.clear
-    @request.session[:game] = Codebreaker::Game.new
+    game = Codebreaker::Game.new
+    @request.session[:game_hash] = game.to_h
     redirect_to('game')
   end
 
@@ -43,17 +45,20 @@ class Racker
     answer = @request.params['guess']
     @request.session[:guess] = answer
     @request.session[:result] = current_game.check_guess(answer)
+    @request.session[:game_hash] = current_game.to_h
     redirect_to('game')
   end
 
   def save_result
     return unless user_name = @request.params['user_name']
-    current_game.save_result(user_name)
+    current_game.save_result(user_name, 'data.yml')
     redirect_to('game')
   end
 
   def hint
-    Rack::Response.new(current_game.hint)
+    hint = current_game.hint
+    @request.session[:game_hash] = current_game.to_h
+    Rack::Response.new(hint)
   end
 
   def not_found
@@ -67,7 +72,8 @@ class Racker
   private
 
   def current_game
-    @request.session[:game]
+    return nil unless @request.session[:game_hash]
+    @game ||= Codebreaker::Game.new(@request.session[:game_hash])
   end
 
   def render(template)
@@ -78,10 +84,11 @@ class Racker
     Rack::Response.new { |response| response.redirect("/#{path}") }
   end
 
-  def render_with_layout(template_path, context = self)
+  def render_with_layout(template_path)
     path = File.expand_path("../views/game/#{template_path}.html.erb", __FILE__)
+    context = ViewContext.new(current_game, @history, @answer, @result)
     render_layout do
-      ERB.new(File.read(path)).result(binding)
+      ERB.new(File.read(path)).result(context.get_binding)
     end
   end
 
