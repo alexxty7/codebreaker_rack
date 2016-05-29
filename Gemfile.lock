@@ -1,0 +1,20 @@
+GIT
+  remote: git://github.com/alexxty7/codebreaker.git
+  revision: fa490ceb7a89b1a8bf0141ff216217eb9ac8ace9
+  specs:
+    codebreaker (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rack (1.6.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  codebreaker!
+  rack
+
+BUNDLED WITH
+   1.12.1

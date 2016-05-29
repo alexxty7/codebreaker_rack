@@ -1,0 +1,18 @@
+---
+:user_name: alex
+:secret_code: '2124'
+:used_attempts: 5
+:used_hints: 0
+:game_status: lose
+---
+:user_name: ddddd
+:secret_code: '2124'
+:used_attempts: 5
+:used_hints: 0
+:game_status: lose
+---
+:user_name: alex
+:secret_code: '3145'
+:used_attempts: 3
+:used_hints: 1
+:game_status: win
